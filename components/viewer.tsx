@@ -22,8 +22,8 @@ export function Viewer({ query, pass, user, url, onClick }: ViewerProps) {
       server_user: user,
       initial_cypher: query,
       labels: {
-        Person: {
-          caption: "name",
+        Table: {
+          caption: "tableName",
           image: "/table.png",
         },
         Movie: {

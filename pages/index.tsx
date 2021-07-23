@@ -34,7 +34,7 @@ interface HomeProps {
   conn: Omit<ViewerProps, "onClick" | "query">;
 }
 
-const initialVal = "match (n:Movie)-[d:REVIEWED]-(p:Person) return n,d,p";
+const initialVal = "match (n) return n"; //"match (n:Movie)-[d:REVIEWED]-(p:Person) return n,d,p";
 
 export default function Home({ conn }: HomeProps) {
   const [open, setOpen] = useState(false);
