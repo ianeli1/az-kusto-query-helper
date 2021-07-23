@@ -20,6 +20,7 @@ export function Viewer({ query, pass, user, url, onClick }: ViewerProps) {
       server_url: url,
       server_password: pass,
       server_user: user,
+      trust: "TRUST_SYSTEM_CA_SIGNED_CERTIFICATES",
       initial_cypher: "match (n:Movie)-[d:REVIEWED]-(p:Person) return n,d,p",
       labels: {
         Person: {
