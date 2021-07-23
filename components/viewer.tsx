@@ -73,7 +73,7 @@ export function Viewer({ query, pass, user, url, onClick }: ViewerProps) {
         return;
       });
     });
-  }, [divRef.current]);
+  }, [divRef.current, onClick, pass, url, user]);
 
   return (
     <div

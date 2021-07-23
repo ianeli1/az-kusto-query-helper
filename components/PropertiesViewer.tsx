@@ -18,7 +18,7 @@ export function PropertiesViewer({ data }: PropertiesProps) {
     <div className="w-full flex flex-col font-sans">
       <div className="m-2 p-2 rounded-lg bg-gray-50 flex-col">
         {elements.map(([name, value]) => (
-          <PropertyEntry name={name} value={value} />
+          <PropertyEntry key={name + value} name={name} value={value} />
         ))}
       </div>
     </div>
