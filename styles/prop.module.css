@@ -1,0 +1,29 @@
+.entry {
+  position: relative;
+}
+
+.entry span {
+  visibility: hidden;
+  position: absolute;
+  z-index: 100;
+  top: -2rem;
+  left: 50%;
+
+  opacity: 0;
+  transition: opacity ease 0.3s;
+}
+.entry span::after {
+}
+
+.entry:hover > code > span {
+  visibility: visible;
+  opacity: 1;
+}
+
+.entry > code {
+  transition: color ease 0.3s;
+}
+
+.entry:hover > code {
+  color: gray;
+}
