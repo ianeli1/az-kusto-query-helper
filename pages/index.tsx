@@ -4,7 +4,7 @@ import type { ViewerProps } from "../components/viewer";
 import dynamic from "next/dynamic";
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import SideWindow from "../components/SideWindow";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { PropertiesViewer } from "../components/PropertiesViewer";
 
 export function getServerSideProps({}: GetServerSidePropsContext) {
@@ -36,6 +36,14 @@ export default function Home({ conn }: HomeProps) {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState({});
 
+  const onViewer: ViewerProps["onClick"] = useCallback(
+    (x) => {
+      setOpen(true);
+      setData(x);
+    },
+    [setData, setOpen]
+  );
+
   return (
     <div className={styles.container}>
       <Head>
@@ -48,13 +56,7 @@ export default function Home({ conn }: HomeProps) {
         <PropertiesViewer data={data} />
       </SideWindow>
 
-      <Viewer
-        onClick={(x) => {
-          setOpen(true);
-          setData(x);
-        }}
-        {...conn}
-      />
+      <Viewer onClick={onViewer} {...conn} />
     </div>
   );
 }

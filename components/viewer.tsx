@@ -20,7 +20,6 @@ export function Viewer({ query, pass, user, url, onClick }: ViewerProps) {
       server_url: url,
       server_password: pass,
       server_user: user,
-      trust: "TRUST_ALL_CERTIFICATES",
       initial_cypher: "match (n:Movie)-[d:REVIEWED]-(p:Person) return n,d,p",
       labels: {
         Person: {
@@ -74,7 +73,7 @@ export function Viewer({ query, pass, user, url, onClick }: ViewerProps) {
         return;
       });
     });
-  }, [divRef.current, onClick, pass, url, user]);
+  }, [onClick, pass, url, user]);
 
   return (
     <div
