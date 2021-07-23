@@ -20,7 +20,7 @@ export function Viewer({ query, pass, user, url, onClick }: ViewerProps) {
       server_url: url,
       server_password: pass,
       server_user: user,
-      initial_cypher: "match (n:Movie)-[d:REVIEWED]-(p:Person) return n,d,p",
+      initial_cypher: query,
       labels: {
         Person: {
           caption: "name",
@@ -73,7 +73,7 @@ export function Viewer({ query, pass, user, url, onClick }: ViewerProps) {
         return;
       });
     });
-  }, [onClick, pass, url, user]);
+  }, [onClick, pass, url, user, query]);
 
   return (
     <div
