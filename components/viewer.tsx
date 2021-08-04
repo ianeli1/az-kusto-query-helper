@@ -1,4 +1,5 @@
-import Neovis, { INeovisConfig } from "neovis.js";
+import { NeovisV } from "../neovis/index";
+import type { INeovisConfig } from "neovis.js";
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { useEffect, useRef } from "react";
 import { flattenProperties } from "../tools";
@@ -17,10 +18,11 @@ export function Viewer({ query, pass, user, url, onClick }: ViewerProps) {
   useEffect(() => {
     const config: INeovisConfig = {
       container_id: "coolDiv",
-      server_url: url,
-      server_password: pass,
-      server_user: user,
+      server_url: "",
+      server_password: "",
+      server_user: "",
       initial_cypher: query,
+      console_debug: true,
       labels: {
         Table: {
           caption: "tableName",
@@ -32,10 +34,26 @@ export function Viewer({ query, pass, user, url, onClick }: ViewerProps) {
         },
       },
     };
-    const vis = new Neovis(config);
-    vis.render();
+    fetch("/api/neo4j", {
+      body: JSON.stringify({
+        query,
+      }),
+      headers: {
+        "content-type": "application/json",
+      },
+      method: "POST",
+    })
+      .then((v) => v.json())
 
-    vis.registerOnEvent("completed", (e) => {
+      .then((records) => {
+        console.log(records);
+        //@ts-ignore
+        vis.renderRecords(records);
+      });
+
+    const vis = new NeovisV(config);
+
+    vis.registerOnEvent("completed", () => {
       //@ts-ignore
       vis["_network"].on("click", (event) => {
         if (event.nodes.length > 0) {
