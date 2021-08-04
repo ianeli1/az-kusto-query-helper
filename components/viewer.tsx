@@ -1,18 +1,14 @@
 import { NeovisV } from "../neovis/index";
 import type { INeovisConfig } from "neovis.js";
-import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { useEffect, useRef } from "react";
 import { flattenProperties } from "../tools";
 
 export interface ViewerProps {
   query: string;
-  url: string;
-  user: string;
-  pass: string;
   onClick: (t: NeovisEvent) => void;
 }
 
-export function Viewer({ query, pass, user, url, onClick }: ViewerProps) {
+export function Viewer({ query, onClick }: ViewerProps) {
   const divRef = useRef<HTMLDivElement>();
 
   useEffect(() => {
@@ -91,7 +87,7 @@ export function Viewer({ query, pass, user, url, onClick }: ViewerProps) {
         return;
       });
     });
-  }, [onClick, pass, url, user, query]);
+  }, [onClick, query]);
 
   return (
     <div

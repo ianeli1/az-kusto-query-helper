@@ -9,34 +9,15 @@ import { PropertiesViewer } from "../components/PropertiesViewer";
 import { Field } from "../components/Field";
 import { Button } from "../components/Button";
 
-export function getServerSideProps({}: GetServerSidePropsContext) {
-  const { N4J_URL, N4J_USER, N4J_PASS } = process.env;
-
-  if (!N4J_URL || !N4J_USER || !N4J_PASS) {
-    throw new Error("A environment variable is missing :(");
-  }
-
-  return {
-    props: {
-      conn: {
-        query: "match (n) return n",
-        url: N4J_URL,
-        user: N4J_USER,
-        pass: N4J_PASS,
-      },
-    },
-  } as GetServerSidePropsResult<HomeProps>;
-}
-
 const Viewer = dynamic(() => import("../components/viewer"), { ssr: false });
 
 interface HomeProps {
-  conn: Omit<ViewerProps, "onClick" | "query">;
+  query: string;
 }
 
-const initialVal = "match (n) return n"; //"match (n:Movie)-[d:REVIEWED]-(p:Person) return n,d,p";
+const initialQuery = "match (n) return n"; //"match (n:Movie)-[d:REVIEWED]-(p:Person) return n,d,p";
 
-export default function Home({ conn }: HomeProps) {
+export default function Home({ query: initialVal = initialQuery }: HomeProps) {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState({});
   const [query, setQuery] = useState(initialVal);
@@ -71,7 +52,7 @@ export default function Home({ conn }: HomeProps) {
         <Button onClick={onQueryUpdate}>Run</Button>
       </div>
 
-      <Viewer onClick={onViewer} {...conn} query={query} />
+      <Viewer onClick={onViewer} query={query} />
     </div>
   );
 }
