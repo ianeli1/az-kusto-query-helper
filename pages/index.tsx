@@ -8,6 +8,7 @@ import { useCallback, useState } from "react";
 import { PropertiesViewer } from "../components/PropertiesViewer";
 import { Field } from "../components/Field";
 import { Button } from "../components/Button";
+import { TopBar } from "../components/TopBar";
 
 export function getServerSideProps({}: GetServerSidePropsContext) {
   const { N4J_URL, N4J_USER, N4J_PASS } = process.env;
@@ -66,10 +67,12 @@ export default function Home({ conn }: HomeProps) {
         <PropertiesViewer data={data} />
       </SideWindow>
 
-      <div className="flex mx-12 justify-between">
-        <Field value={text} onChange={(t) => setText(t)} />
-        <Button onClick={onQueryUpdate}>Run</Button>
-      </div>
+      <TopBar>
+        <div className="flex mx-12 justify-between">
+          <Field value={text} onChange={(t) => setText(t)} />
+          <Button onClick={onQueryUpdate}>Run</Button>
+        </div>
+      </TopBar>
 
       <Viewer onClick={onViewer} {...conn} query={query} />
     </div>
